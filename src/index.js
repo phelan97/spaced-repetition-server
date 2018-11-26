@@ -20,31 +20,20 @@ const resolvers = {
 
 const server = new GraphQLServer({
   typeDefs,
-  resolvers
-  // context: incomingData => ({
-  //   incomingData,
-  //   isAuthorized: () => {
-  //     const authHeader = incomingData.request.header('Authorization');
-  //     if(!authHeader) {
-  //       throw('Unauthorized');
-  //     }
-  //     const token = authHeader.replace('Bearer ', '');
-  //     const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
-  //     return decodedToken;
-  //   }
-  // })
+  resolvers,
+  context: incomingData => ({
+    incomingData,
+    isAuthorized: () => {
+      const authHeader = incomingData.request.header('Authorization');
+      if(!authHeader) {
+        throw('Unauthorized');
+      }
+      const token = authHeader.replace('Bearer ', '');
+      const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
+      return decodedToken;
+    }
+  })
 });
-
-const corsObj = {
-  origin: CLIENT_ORIGIN,
-  credentials: true,
-};
-
-// TODO: read about using cors through graphql-yoga's options
-// server.express.use( 
-//   cors( corsObj ) 
-// );
-
 
 server.express.use(
   morgan(process.env.NODE_ENV === 'production' ? 'common' : 'dev', {
@@ -52,8 +41,12 @@ server.express.use(
   })
 );
 
+const corsSettings = {
+  origin: CLIENT_ORIGIN,
+  credentials: true,
+};
+
 if(require.main === module) {
   dbConnect();
-  // TODO: port config
-  server.start({cors: corsObj}, () => console.log('Server started'));
+  server.start({cors: corsSettings, port: PORT}, () => console.log('Server started on port ' + PORT));
 }
