@@ -1,9 +1,21 @@
 
 type Query {
   test: String!
+
+  nextQuestion: Question!
 }
 
 type Mutation {
   signup(email: String!, password: String!, first: String!, last: String!): String!
   login(email: String!, password: String!): String!
+
+  # maybe use enum?
+  guess(value: String!, questionId: ID!): Boolean!
+}
+
+type Question {
+  # may be required for user guess
+  id: ID!
+  englishWord: String!
+  germanWord: String!
 }
