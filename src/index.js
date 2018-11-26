@@ -1,4 +1,3 @@
-'use strict';
 
 const express = require('express');
 const cors = require('cors');
@@ -35,15 +34,12 @@ const server = new GraphQLServer({
   // })
 });
 
-const corsObj = {
-  origin: CLIENT_ORIGIN,
-  credentials: true,
-};
-
 // TODO: read about using cors through graphql-yoga's options
-// server.express.use( 
-//   cors( corsObj ) 
-// );
+server.express.use(
+  cors({
+    origin: CLIENT_ORIGIN
+  })
+);
 
 
 server.express.use(
@@ -55,5 +51,5 @@ server.express.use(
 if(require.main === module) {
   dbConnect();
   // TODO: port config
-  server.start({cors: corsObj}, () => console.log('Server started'));
+  server.start(() => console.log('Server started'));
 }
