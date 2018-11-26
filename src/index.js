@@ -6,14 +6,15 @@ const morgan = require('morgan');
 const { PORT, CLIENT_ORIGIN } = require('./config');
 const { dbConnect } = require('./db-mongoose');
 const Query = require('./resolvers/query');
+const Mutation = require('./resolvers/mutation');
 const {GraphQLServer} = require('graphql-yoga');
 const jwt = require('jsonwebtoken');
 
 const typeDefs = './src/schema.graphql';
 
 const resolvers = {
-  Query
-  // Mutation
+  Query,
+  Mutation
 };
 
 const server = new GraphQLServer({

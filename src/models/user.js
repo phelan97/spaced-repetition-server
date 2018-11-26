@@ -11,7 +11,7 @@ userSchema.virtual('fullname').get(function() {
   return this.firstName + ' ' + this.lastName;
 });
 
-userSchema.set('toJSON', {
+userSchema.set('toObject', {
   virtuals: true,
   versionKey: false,
   transform: function(doc, result) {
