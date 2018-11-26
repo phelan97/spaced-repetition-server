@@ -11,7 +11,7 @@
     "test": "nodemon --exec npm run mocha-exit0",
     "cover": "nodemon --exec nyc --reporter=lcov --reporter=text-summary npm run mocha-exit0",
     "travis": "npm run mocha",
-    "heroku": "node index.js"
+    "heroku": "node src/index.js"
   },
   "author": "Joe Turner <jturner@thinkful.com>",
   "license": "MIT",
