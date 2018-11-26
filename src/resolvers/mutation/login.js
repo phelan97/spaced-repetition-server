@@ -7,7 +7,7 @@ module.exports = async (root, args) => {
   if(!user) {
     throw('Invalid credentials');
   }
-  const isAuthorized = bcrypt.compare(args.password, user.password);
+  const isAuthorized = await bcrypt.compare(args.password, user.password);
   if(!isAuthorized) {
     throw('Invalid credentials');
   }
