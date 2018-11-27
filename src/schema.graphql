@@ -10,7 +10,7 @@ type Mutation {
   login(email: String!, password: String!): String!
 
   # checks the answer against the top question and then advances to the next question
-  checkAnswer(answer: String!): Boolean!
+  checkAnswer(germanAnswer: String!): Boolean!
 }
 
 type Question {
