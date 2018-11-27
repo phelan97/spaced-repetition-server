@@ -2,19 +2,19 @@
 type Query {
   test: String!
 
-  nextQuestion: Question!
+  question: Question!
 }
 
 type Mutation {
   signup(email: String!, password: String!, first: String!, last: String!): String!
   login(email: String!, password: String!): String!
 
-  # maybe use enum?
-  guess(value: String!, questionId: ID!): Boolean!
+  # checks the answer against the top question and then advances to the next question
+  checkAnswer(answer: String!): Boolean!
 }
 
 type Question {
-  # may be required for user guess
+  # ID may be required? Try to work without it
   id: ID!
   englishWord: String!
   germanWord: String!
