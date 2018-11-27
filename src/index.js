@@ -4,7 +4,7 @@ const express = require('express');
 const cors = require('cors');
 const morgan = require('morgan');
 
-const { PORT, CLIENT_ORIGIN } = require('./config');
+const { PORT, CLIENT_ORIGIN } = require('../config');
 const { dbConnect } = require('./db-mongoose');
 const Query = require('./resolvers/query');
 const Mutation = require('./resolvers/mutation');

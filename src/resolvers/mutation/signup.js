@@ -1,16 +1,15 @@
-const User = require('../../models/user');
-const bcrypt = require('bcrypt');
+
 const jwt = require('jsonwebtoken');
+const createUser = require('../../utils/create-user')
 require('dotenv').config();
 
 module.exports = async (root, args) => {
-  const hashedPassword = await bcrypt.hash(args.password, 10);
-  const userData = {
+  const userArgs = {
     email: args.email,
-    password: hashedPassword,
+    password: args.password,
     firstName: args.first,
     lastName: args.last
   }
-  const user = await User.create(userData);
+  const user = await createUser(userArgs);
   return jwt.sign({user}, process.env.JWT_SECRET);
 }
