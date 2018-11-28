@@ -9,7 +9,7 @@ const userSchema = new mongoose.Schema({
     {
       englishWord: {type: String, required: true},
       germanWord: {type: String, required: true},
-      weight: Number,
+      weight: {type:Number, default: 1},
       next: Number
     }
   ],
