@@ -2,9 +2,9 @@ const User = require('../../models/user');
 
 module.exports = async (root, args, context) => {
   const decodedToken = context.isAuthorized();
-  // find user data and load the questions array
   const user = await User.findById(decodedToken.user.id);
   const currentIndex = user.head;
+  // questions array gets saved back to the db at the end
   const questions = user.questions;
   const question = questions[currentIndex];
 
@@ -14,27 +14,42 @@ module.exports = async (root, args, context) => {
     nextIndex = 0;
   }
 
-  // check if the user got the question right
-  if(question.germanWord.toUpperCase() === args.germanAnswer.toUpperCase()) {
-    let currentQuestion = question;
-    let questionIndex = currentIndex;
-    // find the end of the "linked list"
-    while(currentQuestion.next && currentQuestion.next < questions.length) {
-      questionIndex = currentQuestion.next;
-      currentQuestion = questions[questionIndex];
-    }
-    // TODO: can the current question still be null/undefined/out of bounds here?
-    // Append the answered question to the very end of the list
-    questions[questionIndex].next = currentIndex;
-    // TODO: note that the answered question isn't updated to point to another element
+  let isCorrect = false;
 
-    console.log('set question ' + questionIndex + ' to point to question ' + currentIndex);
-    console.log('updated the head from ' + user.head + ' to ' + nextIndex);
-    // update questions array in the database
-    await User.updateOne({_id: decodedToken.user.id}, {questions, head: nextIndex})
-    return true;
+  // FIXME: workaround for question weight because it isn't defaulting to 1 properly on the schema
+  let weight = question.weight;
+  if(weight <= 1) weight = 1;
+
+  if(question.germanWord.toUpperCase() === args.germanAnswer.toUpperCase()) {
+    weight *= 2;
+    isCorrect = true;
+  } else {
+    weight = 1;
   }
-  // For now don't move the head if the answer is incorrect. With this implementation
-  // the question will only change when the user enters the expected answer
-  return false;
+  questions[currentIndex].weight = weight;
+
+  // TODO: can the current question still be null/undefined/out of bounds here?
+  let currentQuestion = question;
+  let questionIndex = currentIndex;
+  let count = 0;
+  // traverse the "linked list"
+  while(currentQuestion.next && currentQuestion.next < questions.length) {
+    // move back based on weight (or until the end of the list)
+    if(count === weight) {
+      break;
+    }
+    questionIndex = currentQuestion.next;
+    currentQuestion = questions[questionIndex];
+    count++;
+  }
+
+  const tempPtr = questions[questionIndex].next;
+  // Insert the answered question to its appropriate location in the list, depending on weight
+  questions[questionIndex].next = currentIndex;
+  questions[currentIndex].next = tempPtr;
+
+  console.log('set question ' + questionIndex + ' to point to question ' + currentIndex);
+  console.log('updated the head from ' + user.head + ' to ' + nextIndex);
+  await User.updateOne({_id: decodedToken.user.id}, {questions, head: nextIndex});
+  return isCorrect;
 }
