@@ -28,28 +28,30 @@ module.exports = async (root, args, context) => {
   }
   questions[currentIndex].weight = weight;
 
+  // console.log('starting word: ', question);
+
   // TODO: can the current question still be null/undefined/out of bounds here?
   let currentQuestion = question;
   let questionIndex = currentIndex;
   let count = 0;
   // traverse the "linked list"
-  while(currentQuestion.next && currentQuestion.next < questions.length) {
+  while(currentQuestion.next < questions.length) {
     // move back based on weight (or until the end of the list)
     if(count === weight) {
       break;
     }
     questionIndex = currentQuestion.next;
     currentQuestion = questions[questionIndex];
+    // console.log('current word: ', currentQuestion.germanWord, ' at index ', questionIndex);
     count++;
   }
 
-  const tempPtr = questions[questionIndex].next;
   // Insert the answered question to its appropriate location in the list, depending on weight
+  // console.log('currentQuestion', currentQuestion);
+  // console.log('updated the head from ' + user.head + ' to ' + nextIndex);
+  questions[currentIndex].next = currentQuestion.next;
   questions[questionIndex].next = currentIndex;
-  questions[currentIndex].next = tempPtr;
 
-  console.log('set question ' + questionIndex + ' to point to question ' + currentIndex);
-  console.log('updated the head from ' + user.head + ' to ' + nextIndex);
   await User.updateOne({_id: decodedToken.user.id}, {questions, head: nextIndex});
   return isCorrect;
 }
