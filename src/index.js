@@ -41,7 +41,7 @@ server.express.use(
 );
 
 const corsSettings = {
-  origin: [CLIENT_ORIGIN],
+  origin: CLIENT_ORIGIN,
   credentials: true,
 };
 
