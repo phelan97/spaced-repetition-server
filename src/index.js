@@ -46,7 +46,7 @@ const corsSettings = {
   credentials: true,
 };
 
-console.log(process.env);
+console.log(CLIENT_ORIGIN);
 
 if(require.main === module) {
   dbConnect();
