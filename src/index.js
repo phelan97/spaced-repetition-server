@@ -42,9 +42,11 @@ server.express.use(
 );
 
 const corsSettings = {
-  origin: CLIENT_ORIGIN,
+  origin: true,
   credentials: true,
 };
+
+console.log(corsSettings);
 
 if(require.main === module) {
   dbConnect();
