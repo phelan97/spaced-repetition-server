@@ -2,6 +2,10 @@ const User = require('../../models/user');
 
 module.exports = async (root, args, context) => {
   const decodedToken = context.isAuthorized();
+  if(!args.germanAnswer) {
+    throw('Answer cannot be empty');
+  }
+  
   const user = await User.findById(decodedToken.user.id);
   const currentIndex = user.head;
   // questions array gets saved back to the db at the end
