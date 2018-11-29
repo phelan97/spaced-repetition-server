@@ -46,7 +46,10 @@ const corsSettings = {
   credentials: true,
 };
 
+console.log(corsSettings);
+
 if(require.main === module) {
   dbConnect();
-  server.start({cors: corsSettings, port: PORT}, () => console.log('Server started on port ' + PORT));
+  //server.start({cors: corsSettings, port: PORT}, () => console.log('Server started on port ' + PORT));
+  server.start(() => console.log('Server started on port ' + PORT));
 }
