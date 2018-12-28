@@ -19,6 +19,6 @@ type Question {
   id: ID!
   englishWord: String!
   germanWord: String!
-  numCorrect: Number!
-  numIncorrect: Number!
+  numCorrect: Int!
+  numIncorrect: Int!
 }

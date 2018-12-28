@@ -14,6 +14,7 @@ const createUser = async function(userData) {
     const questionObj = {
       weight: 0,
       next: i+1,
+      head: 0,
       ...questionData[i]
     }
     questions[i] = questionObj;
