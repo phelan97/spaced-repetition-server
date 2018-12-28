@@ -27,8 +27,10 @@ module.exports = async (root, args, context) => {
   if(question.germanWord.toUpperCase() === args.germanAnswer.toUpperCase()) {
     weight *= 2;
     isCorrect = true;
+    questions[currentIndex].numCorrect++;
   } else {
     weight = 1;
+    questions[currentIndex].numIncorrect++;
   }
   questions[currentIndex].weight = weight;
 

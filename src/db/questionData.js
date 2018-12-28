@@ -2,43 +2,63 @@
 const questionData = [
   {
     englishWord: "see",
-    germanWord: "sehen"
+    germanWord: "sehen",
+    numCorrect: 0,
+    numIncorrect: 0
   },
   {
     germanWord: "weit",
-    englishWord: "far"
+    englishWord: "far",
+    numCorrect: 0,
+    numIncorrect: 0
   },
   {
     germanWord: "nahe",
-    englishWord: "near"
+    englishWord: "near",
+    numCorrect: 0,
+    numIncorrect: 0
   },
   {
     germanWord: "klein",
-    englishWord: "small"
+    englishWord: "small",
+    numCorrect: 0,
+    numIncorrect: 0
   },
   {
     germanWord: "schwierig",
-    englishWord: "difficult"
+    englishWord: "difficult",
+    numCorrect: 0,
+    numIncorrect: 0
   },
   {
     germanWord: "gehen",
-    englishWord: "go"
+    englishWord: "go",
+    numCorrect: 0,
+    numIncorrect: 0
   },
   {
     germanWord: "morgen",
-    englishWord: "tomorrow"
+    englishWord: "tomorrow",
+    numCorrect: 0,
+    numIncorrect: 0
   },
   {
     germanWord: "gestern",
-    englishWord: "yesterday"
+    englishWord: "yesterday",
+    numCorrect: 0,
+    numIncorrect: 0
   },
   {
     germanWord: "gut",
-    englishWord: "good"
+    englishWord: "good",
+    numCorrect: 0,
+    numIncorrect: 0
   },
   {
     germanWord: "einfach",
-    englishWord: "easy"
+    englishWord: "easy",
+    numCorrect: 0,
+    numIncorrect: 0
   }
 ];
 

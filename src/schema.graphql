@@ -3,6 +3,7 @@ type Query {
   test: String!
 
   question: Question!
+  allQuestions: [Question!]!
 }
 
 type Mutation {
@@ -18,4 +19,6 @@ type Question {
   id: ID!
   englishWord: String!
   germanWord: String!
+  numCorrect: Number!
+  numIncorrect: Number!
 }
